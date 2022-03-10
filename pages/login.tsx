@@ -2,25 +2,25 @@ import React , { useState }from 'react'
 import axios from 'axios';
 import { postData } from '../utils/request';
 
-const Register= () => {
+const Login= () => {
 
-    const [registerForm, setRegisterForm] = useState({
+    const [loginForm, setLoginForm] = useState({
         username: "",
         password: "",
     });
     
 
     const onChangeRegisForm = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setRegisterForm({ ...registerForm , [e.target.name] : e.target.value})
+        setLoginForm({ ...loginForm , [e.target.name] : e.target.value})
     }
 
-    const {username, password} = registerForm;
+    const {username, password} = loginForm;
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
             
-            const res = await postData("auth/register", registerForm);
+            const res = await postData("auth/login", loginForm);
 
             if(res.err) {
                 console.log(res.err)
@@ -38,10 +38,10 @@ const Register= () => {
                 <br />
                 <input type="password" value={password} name="password" onChange={onChangeRegisForm}/>
                 <br />
-                <button type="submit">Register</button>
+                <button type="submit">Login</button>
             </form>
         </div>
     )
 }
 
-export default Register;
+export default Login;
