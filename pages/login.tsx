@@ -1,9 +1,10 @@
 import React , { useState }from 'react'
 import axios from 'axios';
 import { postData } from '../utils/request';
-
+import { useRouter } from 'next/router';
 const Login= () => {
 
+    const router = useRouter();
     const [loginForm, setLoginForm] = useState({
         username: "",
         password: "",
@@ -25,7 +26,10 @@ const Login= () => {
             if(res.err) {
                 console.log(res.err)
             }
-            return res;
+            
+            // return res;
+            router.push("/")
+
         }catch (e) {
             console.log(e);
         }

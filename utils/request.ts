@@ -1,5 +1,5 @@
 
-const url_Base = 'http://localhost:3000/';
+const url_Base = 'http://localhost:3000';
 
 export const getData = async (url:string) => {
     const res = await fetch(`${url_Base}/api/${url}` , {

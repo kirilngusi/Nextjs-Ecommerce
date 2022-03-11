@@ -4,11 +4,12 @@ import jwt, { sign, SignOptions } from "jsonwebtoken";
 import connectDB from "../../../utils/connectDb";
 import valid from "../../../utils/valid";
 import User from "../../../models/userModel";
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const dotenv = require("dotenv");
 dotenv.config();
 
-const register = async (req: any, res: any) => {
+const register = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         connectDB();
         const { username, password } = req.body;
@@ -18,7 +19,7 @@ const register = async (req: any, res: any) => {
         }
         const user = await User.findOne({ username });
         if (user) {
-            return res.status(400).json({ err: "User is exists " });
+            return res.status(400).json({ err: " User is exists " });
         }
 
         //hash password
@@ -38,12 +39,11 @@ const register = async (req: any, res: any) => {
         const accessToken = jwt.sign(
             {
                 userId: newUser._id,
-                admin: username === "admin" && password === "admin",
+                admin: username === "admin",
             },
             key_secret
         );
 
-        console.log(accessToken);
 
         res.json({
             success: true,

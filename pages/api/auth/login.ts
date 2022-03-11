@@ -4,12 +4,13 @@ import jwt from "jsonwebtoken";
 import connectDB from "../../../utils/connectDb";
 import valid from "../../../utils/valid";
 import User from "../../../models/userModel";
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-const login = async (req: any, res: any) => {
+const login = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         connectDB();
         const { username, password } = req.body;
@@ -39,7 +40,7 @@ const login = async (req: any, res: any) => {
         const accessToken = jwt.sign(
             {
                 userId: user._id,
-                admin: username === "admin" && password === "admin",
+                admin: username === "admin",
             },
             key_secret
         );
