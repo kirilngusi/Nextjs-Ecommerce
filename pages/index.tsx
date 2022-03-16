@@ -1,21 +1,46 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import { useContext , useEffect } from 'react';
+
+import {AuthContext} from '../contexts/AuthContext';
+
+import { useRouter } from 'next/router';
+
 import styles from '../styles/Home.module.css'
-import { useState } from 'react';
-import jwt from 'jsonwebtoken';
+
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+
+import { postData , getData } from "../utils/request";
 
 
-const Home: NextPage = () => {
+const Home: NextPage = ({data}) => {
 
+  // const router = useRouter();
+  // const { authState , logOut}  = useContext(AuthContext);
+
+  console.log(data)
+ 
   
-
-
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>Home</h1>
+     
     </div>
   )
 }
 
-export default Home
+export default Home;
+
+
+// export const getStaticProps: GetStaticProps = async context => {
+//   // ...
+// }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+
+  const data = await getData("product");
+
+
+  return { 
+    props: { data }
+  }
+}

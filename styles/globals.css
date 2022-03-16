@@ -14,3 +14,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.navbar-collapse {
+  display: flex;
+  justify-content: flex-end;
+}

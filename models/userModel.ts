@@ -3,12 +3,12 @@ const {Schema} = mongoose;
 
 const userSchema = new Schema({
     username: {
-        type: 'string',
+        type: String,
         unique: true,
         required: true
     },
     password: {
-        type: 'string',
+        type: String,
         required: true
     },
     created_at: {
