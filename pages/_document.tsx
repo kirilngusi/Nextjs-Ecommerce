@@ -13,10 +13,7 @@ class MyDocument extends Document {
             <Html>
                 <Head>
                   
-                    <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale"
-                    />
+                  
                     <meta name="description" content="NextJs Ecommerce " />
                     <link
                         rel="stylesheet"
