@@ -1,7 +1,7 @@
 export const authReducer = (state, action) => {
     const {
         type,
-        payload: { auth, notify }
+        payload: { auth, notify, cart },
     } = action;
 
     switch (type) {
@@ -10,6 +10,11 @@ export const authReducer = (state, action) => {
                 ...state,
                 auth,
                 notify,
+            };
+        case "ADD_CART":
+            return {
+                ...state,
+                cart,
             };
         default:
             return state;

@@ -6,13 +6,19 @@ const orderSchema = new Schema({
         type: Types.ObjectId,
         ref: "User"
     },
+    orderItems: [
+        {
+            type: Types.ObjectId,
+            ref: "OrderDetail"
+        }
+    ],
     address: String,
     mobile: String,
     delivered: {
         type: Boolean,
         default: false
     },
-    total: {
+    totalPrice: {
         type: Number,
         default: 0,
     },

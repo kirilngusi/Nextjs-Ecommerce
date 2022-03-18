@@ -7,3 +7,4 @@ export interface productProps {
     images: any;
     _id: string;
 }
+

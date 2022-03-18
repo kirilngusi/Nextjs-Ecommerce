@@ -1,8 +1,18 @@
-import React from "react";
+import React , {useState, useContext} from "react";
 import Image from "next/image";
 import { productProps } from "../utils/types";
 import Link from "next/link";
-const ProductItem = ({ product }: { product: productProps }) => {
+import { ProductContext } from "../contexts/productContext";
+
+
+const ProductItem = ({ product }) => {
+ 
+    const {addToCart, dispatch , state} = useContext(ProductContext);
+
+    const {cart} = state;
+
+    console.log(product)
+
     return (
         <div className="card" style={{ width: "18rem" }}>
             <Image
@@ -27,9 +37,9 @@ const ProductItem = ({ product }: { product: productProps }) => {
                     <Link href={`product/${product._id}`}>
                         <a className="btn btn-primary col-5">View</a>
                     </Link>
-                    <a href="#" className="btn btn-danger col-5">
-                        Buy
-                    </a>
+                    <button className="btn btn-danger col-5" onClick={() => dispatch(addToCart(product,cart))}>
+                        Add To Cart
+                    </button>
                 </div>
             </div>
         </div>

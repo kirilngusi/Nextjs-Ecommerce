@@ -7,11 +7,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const getProductDetail = async (req:NextApiRequest, res:NextApiResponse ) => {
     try {
         connectDB();
-        const {_id} = req.query;
-        console.log(_id)
-        const product = await Product.findOne({_id});
+        const {id} = req.query;
+        const product = await Product.findOne({_id: id});
         res.json({
-            success: true,
             product: product
         });
     } catch (err) {
