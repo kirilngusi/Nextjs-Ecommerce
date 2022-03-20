@@ -11,11 +11,7 @@ export const authReducer = (state, action) => {
                 auth,
                 notify,
             };
-        case "ADD_CART":
-            return {
-                ...state,
-                cart,
-            };
+        
         default:
             return state;
     }

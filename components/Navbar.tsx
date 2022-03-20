@@ -1,31 +1,24 @@
-import React from "react";
+import React , {useContext} from "react";
 import Link from "next/link";
-
+import { ProductContext } from "../contexts/productContext";
 const Navbar = () => {
 
+    const {state} = useContext(ProductContext)
+
+    const {cart} = state;
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light nav-flex">
             <Link href="/">
                 <a className="navbar-brand">Home</a>
             </Link>
-            {/* <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-                data-bs-toggle="dropdown"
-            >
-                <span className="navbar-toggler-icon"></span>
-            </button> */}
+          
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul className="navbar-nav ">
                     <li className="nav-item ">
                         <Link href="/cart">
                             <a className="nav-link">
+                                {cart.length}
                                 <i className="fas fa-cart-arrow-down">Cart</i>
                             </a>
                         </Link>

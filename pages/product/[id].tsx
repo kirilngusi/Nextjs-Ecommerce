@@ -1,13 +1,21 @@
-import React from "react";
+import React , {useContext} from "react";
 import { getData } from "../../utils/request";
 import Image from "next/image";
 import { productProps } from "../../utils/types";
+import {ProductContext} from '../../contexts/productContext';
+
+
 
 interface productDetailProps {
   product: productProps
 }
 
 const ProductDetail = ({ res }: {res: productDetailProps}) => {
+    
+    const {addToCart , dispatch , state} = useContext(ProductContext)
+
+    const {cart} = state
+
     return (
             <div className="row">
                 <div className="col-md-6">
@@ -41,9 +49,9 @@ const ProductDetail = ({ res }: {res: productDetailProps}) => {
                         </div>
                     </div>
                     <p>{res.product.description}</p>
-                    <a href="#" className="btn btn-danger col-3">
+                    <button className="btn btn-danger col-3" onClick={() => dispatch(addToCart(res.product,cart))}>
                         Add To Cart
-                    </a>
+                    </button>
                 </div>
             </div>
     );

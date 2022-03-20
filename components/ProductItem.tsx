@@ -11,7 +11,7 @@ const ProductItem = ({ product }) => {
 
     const {cart} = state;
 
-    console.log(product)
+    // console.log(product)
 
     return (
         <div className="card" style={{ width: "18rem" }}>

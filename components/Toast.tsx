@@ -1,9 +1,27 @@
-import React from 'react'
+const Toast = ({msg, handleClose , bgColor}) => {
+    console.log("msg", msg)
+    return (
+        <div
+            className={`toast show position-fixed text-light ${bgColor}`}
+            style={{ top: "5px", right: "5px", minWidth: "280px" }}
+        >
+            <div className={`toast-header ${bgColor} text-light`}>
+                <strong className="mr-auto text-light">{msg.title}</strong>
 
-const Toast = () => {
-  return (
-    <div>Toast</div>
-  )
-}
+                <button
+                    type="button"
+                    className="ml-2 mb-1 close "
+                    data-dismiss="toast"
+                    style={{ outline: "none" }}
+                    onClick={handleClose}
+                >
+                    x
+                </button>
+            </div>
 
-export default Toast
+            <div className="toast-body">{msg.msg}</div>
+        </div>
+    );
+};
+
+export default Toast;

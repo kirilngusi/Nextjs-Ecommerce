@@ -1,17 +1,25 @@
-import React from 'react'
-
-export const productReducer = (state,action) => {
-    const {type, payload} = action;
-
+export const productReducer = (state, action) => {
+    const { type, payload} = action;
     switch (type) {
-
-        case 'ADD':
+        case "ADD_TO_CART":
             return {
                 ...state,
-                cart: payload
+                cart: payload,
             };
-          
+
+        case "Notify":
+            return {
+                ...state,
+                notify: payload,
+            };
+        
+        case "DELETE_ITEM":
+            return {
+                ...state,
+                cart: payload,
+            };
+            
         default:
             return state;
     }
-}
+};
