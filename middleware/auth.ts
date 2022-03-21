@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const auth = async (req:any, res:any) => {
-    const authHeader = req.header("Authorization");
+    const authHeader = req.headers("Authorization");
     const token = authHeader || authHeader.split(" ")[1];
 
     if (!token)
@@ -19,17 +19,17 @@ const auth = async (req:any, res:any) => {
 
     console.log(decoded);
 
-    if(!decoded) return res.status(400).json({err: 'Invalid Authentication.'})
+    if(!decoded) return res.status(400).json({success: false , message: 'Invalid Authentication.'})
 
-    // const user = await User.findOne({_id: decoded  })
+    const user = await User.findOne({_id: decoded  })
     // return user;
 
     //if success
     // req.userId = decoded.userId;
+      return {id: user._id};
 
   } catch (error) {
-    console.log(error);
-    return res.status(403).json({ success: false, message: "Invalid token" });
+    return res.status(403).json({ success: false, message: error});
   }
 }
 

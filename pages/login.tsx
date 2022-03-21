@@ -24,9 +24,11 @@ const Login = () => {
     ) => {
         e.preventDefault();
         try {
-            await loginUser(loginForm);
-
-            router.push("/");
+            const res = await loginUser(loginForm);
+            if(res.success) {
+                router.push("/")
+            }
+            return res;
         } catch (e) {
             console.log(e);
         }

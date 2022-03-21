@@ -16,14 +16,14 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
         const { username, password } = req.body;
         const errMsg = valid(username, password);
         if (errMsg) {
-            return res.status(400).json({ err: errMsg });
+            return res.status(400).json({ success: false, msg: errMsg });
         }
         const user = await User.findOne({ username });
 
         if (!user) {
             return res
                 .status(400)
-                .json({ err: "Invalid Username Or Password" });
+                .json({ success: false, msg: "Invalid Username Or Password" });
         }
 
         //hash password
@@ -32,7 +32,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!isPassCorrect) {
             return res
                 .status(400)
-                .json({ err: "Invalid Username Or Password" });
+                .json({ success: false, msg: "Invalid Username Or Password" });
         }
 
         const key_secret = process.env.ACCESS_TOKEN_JWT as string;
@@ -47,7 +47,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
 
         res.json({
             success: true,
-            msg: "Register successful",
+            msg: "Login successful",
             token: accessToken,
         });
     } catch (err) {

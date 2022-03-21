@@ -15,11 +15,11 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
         const { username, password } = req.body;
         const errMsg = valid(username, password);
         if (errMsg) {
-            return res.status(400).json({ err: errMsg });
+            return res.status(400).json({ success: false , msg: errMsg });
         }
         const user = await User.findOne({ username });
         if (user) {
-            return res.status(400).json({ err: " User is exists " });
+            return res.status(400).json({success: false , msg: " User is exists " });
         }
 
         //hash password
@@ -47,7 +47,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
 
         res.json({
             success: true,
-            msg: "Login successful",
+            msg: "Register successful",
             token: accessToken,
         });
     } catch (err) {

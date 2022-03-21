@@ -18,7 +18,6 @@ const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
 
     const [state, dispatch] = useReducer(productReducer, initialState);
 
-    console.log("state", state)
     const addToCart = (product, cart) => {
         if (product.inStock === 0) {
             return ({type: 'Notify' , payload: {error: "product is soldout"}})

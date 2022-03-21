@@ -12,8 +12,10 @@ const orderSchema = new Schema({
             ref: "OrderDetail"
         }
     ],
-    address: String,
+    name: String,
+    email: String,
     mobile: String,
+    address: String,
     delivered: {
         type: Boolean,
         default: false

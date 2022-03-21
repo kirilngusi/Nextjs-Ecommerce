@@ -23,13 +23,7 @@ const Register = () => {
     ) => {
         e.preventDefault();
         try {
-            const res = await regisUser(registerForm);
-
-            if (res.err) {
-                console.log(res.err);
-            }
-            router.push("/");
-            return res;
+            await regisUser(registerForm);
         } catch (e) {
             console.log(e);
         }

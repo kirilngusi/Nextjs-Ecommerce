@@ -1,17 +1,21 @@
 export const authReducer = (state, action) => {
     const {
         type,
-        payload: { auth, notify, cart },
+        payload,
     } = action;
 
     switch (type) {
         case "SET_AUTH":
             return {
                 ...state,
-                auth,
-                notify,
+                authUser: payload
             };
-        
+        case "Notify":
+            return {
+                ...state,
+                notifyAuth: payload
+            };
+
         default:
             return state;
     }
