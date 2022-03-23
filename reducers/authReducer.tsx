@@ -8,7 +8,8 @@ export const authReducer = (state, action) => {
         case "SET_AUTH":
             return {
                 ...state,
-                authUser: payload
+                authUser: payload,
+                authLoading: false,
             };
         case "Notify":
             return {

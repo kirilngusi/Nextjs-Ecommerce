@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Link from "next/link";
+
 import { AuthContext } from "../contexts/AuthContext";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
 
     const { loginUser } = useContext(AuthContext);
 
-    const onChangeRegisForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeLoginForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
     };
 
@@ -57,7 +57,7 @@ const Login = () => {
                                                 id="username"
                                                 value={username}
                                                 name="username"
-                                                onChange={onChangeRegisForm}
+                                                onChange={onChangeLoginForm}
                                             />
                                         </div>
                                         <div className="form-group">
@@ -71,7 +71,7 @@ const Login = () => {
                                                 id="pwd"
                                                 value={password}
                                                 name="password"
-                                                onChange={onChangeRegisForm}
+                                                onChange={onChangeLoginForm}
                                             />
                                         </div>
                                         <div className="form-group ">

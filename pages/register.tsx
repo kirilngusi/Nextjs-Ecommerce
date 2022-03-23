@@ -1,11 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+
 import { AuthContext } from "../contexts/AuthContext";
+
 const Register = () => {
     const router = useRouter();
 
     const [registerForm, setRegisterForm] = useState({
+        name: "",
         username: "",
         password: "",
     });
@@ -16,14 +19,18 @@ const Register = () => {
         setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
     };
 
-    const { username, password } = registerForm;
+    const {name, username, password  } = registerForm;
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
         e: React.FormEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
         try {
-            await regisUser(registerForm);
+            const res = await regisUser(registerForm);
+          
+            if(res.success) {
+                router.push("/")
+            }
         } catch (e) {
             console.log(e);
         }
@@ -42,6 +49,19 @@ const Register = () => {
                                     </p>
 
                                     <form onSubmit={handleSubmit}>
+                                        <div className="form-group">
+                                            <label htmlFor="name">
+                                                Name
+                                            </label>
+                                            <input
+                                                className="form-control"
+                                                placeholder="Enter name"
+                                                id="name"
+                                                value={name}
+                                                name="name"
+                                                onChange={onChangeRegisForm}
+                                            />
+                                        </div>
                                         <div className="form-group">
                                             <label htmlFor="username">
                                                 Username

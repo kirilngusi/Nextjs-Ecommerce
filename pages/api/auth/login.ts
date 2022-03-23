@@ -1,24 +1,31 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import connectDB from "../../../utils/connectDb";
-import valid from "../../../utils/valid";
+import {validLogin} from "../../../utils/valid";
+
 import User from "../../../models/userModel";
-import type { NextApiRequest, NextApiResponse } from 'next'
 
-const dotenv = require("dotenv");
-
-dotenv.config();
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    switch(req.method){
+        case "POST":
+            await login(req, res);
+            break;
+    }
+}
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         connectDB();
         const { username, password } = req.body;
-        const errMsg = valid(username, password);
+        const errMsg = validLogin(username, password);
         if (errMsg) {
             return res.status(400).json({ success: false, msg: errMsg });
         }
         const user = await User.findOne({ username });
+
+        // console.log(user)
 
         if (!user) {
             return res
@@ -36,6 +43,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const key_secret = process.env.ACCESS_TOKEN_JWT as string;
+        
         //Return access token
         const accessToken = jwt.sign(
             {
@@ -45,14 +53,15 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
             key_secret
         );
 
-        res.json({
+        res.status(200).json({
             success: true,
             msg: "Login successful",
             token: accessToken,
+            name: user.name,
+            username: user.username
         });
     } catch (err) {
         return res.status(500).json({ err: err });
     }
 };
 
-export default login;

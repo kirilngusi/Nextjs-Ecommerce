@@ -1,36 +1,34 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/userModel';
+import jwt from "jsonwebtoken";
+import User from "../models/userModel";
 
-const dotenv = require("dotenv");
-
-dotenv.config();
-
-const auth = async (req:any, res:any) => {
-    const authHeader = req.headers("Authorization");
-    const token = authHeader || authHeader.split(" ")[1];
+const auth = async (req: any, res: any) => {
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(" ")[1];
 
     if (!token)
-    return res
-      .status(400)
-      .json({ success: false, message: "Access token not found" });
+        return res
+            .status(400)
+            .json({ success: false, message: "Access token not found" });
 
-  try {
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_JWT as string);
+    try {
+        const key_secret = process.env.ACCESS_TOKEN_JWT as string;
+      
+        const decoded = jwt.verify(token, key_secret);
 
-    console.log(decoded);
+        if(!decoded) return res.status(400).json({success: false , message: 'Invalid Authentication.'})
 
-    if(!decoded) return res.status(400).json({success: false , message: 'Invalid Authentication.'})
+        const user = await User.findOne({_id: decoded.userId}); 
+        // // return user;
+        // console.log("user" , user);
+        // //if success
+        // // req.userId = decoded.userId;
+        //   return {id: user._id};
 
-    const user = await User.findOne({_id: decoded  })
-    // return user;
 
-    //if success
-    // req.userId = decoded.userId;
-      return {id: user._id};
-
-  } catch (error) {
-    return res.status(403).json({ success: false, message: error});
-  }
-}
+        return res.status(200).json({ success: true, message: {username: user.username ,  name: user.name , token:token, } });
+    } catch (error) {
+        return res.status(403).json({ success: false, message: error });
+    }
+};
 
 export default auth;

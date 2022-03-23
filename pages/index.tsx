@@ -22,11 +22,7 @@ interface IProps {
 
 const Home: NextPage = (props: IProps) => {
     const [products, setProducts] = useState(props.productProps);
-    // const router = useRouter();
-    // const { authState , logOut}  = useContext(AuthContext);
-
-    // console.log(products);
-
+ 
     return (
         <div>
             <Head>

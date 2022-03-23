@@ -1,22 +1,48 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ProductContext } from "../contexts/productContext";
 import Link from "next/link";
+
+import { ProductContext } from "../contexts/productContext";
+import { AuthContext } from "../contexts/AuthContext";
+
 const Checkout = () => {
     const { state } = useContext(ProductContext);
+    const { loadUser, dispatchAuth } = useContext(AuthContext);
     const { cart } = state;
 
     const total = (): number => {
-      var sum = 0;
-      cart.forEach((item) => {
-          sum += item.price * item.quantity
-      })
+        var sum = 0;
+        cart.forEach((item) => {
+            sum += item.price * item.quantity;
+        });
 
-      return sum;
-    }
-    const submitForm = (e) => {
-      e.preventDefault();
-      
-    }
+        return sum;
+    };
+    const submitForm = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await loadUser();
+
+            if (!res.success) {
+                dispatchAuth({
+                    type: "SET_AUTH",
+                    payload: {
+                        auth: false,
+                        token: "",
+                        notifyAuth: "You not loggin !",
+                        name: "",
+                        username: "",
+                    },
+                });
+                dispatchAuth({
+                    type: "Notify",
+                    payload: "You not loggin !",
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="d-flex flex-md-row wrap">
             <div className="col-md-6">
@@ -69,7 +95,11 @@ const Checkout = () => {
                             <Link href="/cart">Cart</Link>
                         </div>
                         <div className="col-md d-flex flex-row-reverse">
-                            <button type="submit" className="btn btn-primary" onClick={submitForm}>
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                onClick={submitForm}
+                            >
                                 Complete your order
                             </button>
                         </div>
@@ -127,7 +157,7 @@ const Checkout = () => {
                     </button>
                 </div>
 
-                <div>Transport fee :  </div>
+                <div>Transport fee : </div>
 
                 <div>Total : ${total()} </div>
             </div>
