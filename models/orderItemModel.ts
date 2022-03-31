@@ -10,7 +10,7 @@ const OrderDetail = new Schema({
     },
     quantity: {
         type: Number,
-        reuired: true,
+        required: true,
     },
 })
 

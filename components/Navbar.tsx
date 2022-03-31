@@ -14,11 +14,14 @@ const Navbar = () => {
         logOut,
     } = useContext(AuthContext);
 
-    const { cart } = state;
+    const { productLoading, cart  } = state;
 
-    if (authLoading) {
+    if (authLoading ) {
         return <Loading />;
     }
+
+    
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light nav-flex">
@@ -31,7 +34,7 @@ const Navbar = () => {
                     <li className="nav-item ">
                         <Link href="/cart">
                             <a className="nav-link">
-                                {cart.length}
+                                {cart.length || 0}
                                 <i className="fas fa-cart-arrow-down">Cart</i>
                             </a>
                         </Link>

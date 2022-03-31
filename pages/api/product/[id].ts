@@ -1,9 +1,10 @@
 import connectDB from "../../../utils/connectDb";
-import valid from "../../../utils/valid";
 import Product from "../../../models/productModel";
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-
+// @route GET api/product/[id]
+// @desc getProductDetail
+// @access Public
 const getProductDetail = async (req:NextApiRequest, res:NextApiResponse ) => {
     try {
         connectDB();

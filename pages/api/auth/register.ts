@@ -15,6 +15,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 }
 
+//@route POST api/auth/login
+//@desc register user
+//@access public
 const register = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         connectDB();
@@ -48,7 +51,10 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
                 userId: newUser._id,
                 admin: username === "admin",
             },
-            key_secret
+            key_secret,
+            {
+                expiresIn: "1d",
+            }
         );
 
 
@@ -57,7 +63,8 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
             msg: "Register successful",
             token: accessToken,
             name: newUser.name,
-            username: newUser.username
+            username: newUser.username,
+            user_id: user._id
         });
 
     } catch (err) {

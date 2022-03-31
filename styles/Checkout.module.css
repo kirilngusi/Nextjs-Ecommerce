@@ -1,0 +1,17 @@
+.title_heading {
+    padding: 50px 0 20px 0;
+}
+
+.title_heading_text {
+    text-align: center;
+    font-size: 23px;
+
+}
+
+.total_container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    
+}

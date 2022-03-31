@@ -1,41 +1,44 @@
-import type { NextPage } from "next";
 import { useContext, useState, useEffect } from "react";
 
-import { AuthContext } from "../contexts/AuthContext";
-
-import { useRouter } from "next/router";
+import Head from "next/head";
+import type { NextPage } from "next";
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 
 import styles from "../styles/Home.module.css";
 
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
+import { ProductContext } from "../contexts/productContext";
 
-import { postData, getData } from "../utils/request";
 import ProductItem from "../components/ProductItem";
-import Head from "next/head";
+import Loading from "../components/Loading";
 
-import {productProps} from '../utils/types'
+import { getData } from "../utils/request";
+
+import { productProps } from "../utils/types";
 
 interface IProps {
     productProps: productProps[];
     result: number;
 }
 
-const Home: NextPage = (props: IProps) => {
+const Home = (props: IProps) => {
     const [products, setProducts] = useState(props.productProps);
- 
+
     return (
         <div>
             <Head>
                 <title>Home Page</title>
             </Head>
+                <div className={styles.title_heading}>
+                    <h2 className={styles.title_heading_text}>FEATURED PRODUCTS</h2>
+                </div>
 
-            {products.length === 0 ? (
-                <h1>No Product</h1>
-            ) : (
-                products.map((product,index) => (
-                    <ProductItem product={product} key={index}/>
-                ))
-            )}
+                {products.length === 0 ? (
+                    <h1>No Product</h1>
+                ) : (
+                    products.map((product, index) => (
+                                <ProductItem product={product} key={index} />
+                    ))
+                )}
         </div>
     );
 };

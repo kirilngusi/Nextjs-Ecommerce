@@ -1,8 +1,13 @@
 import React, { createContext, useReducer, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import nookies from 'nookies'
 
 import { authReducer } from "../reducers/authReducer";
 
 import { postData, getData } from "../utils/request";
+
+import {setTokenCookie } from '../middleware/auth-cookies';
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 export const AuthContext = createContext(null);
 
@@ -11,6 +16,8 @@ type AuthContextProviderProps = {
 };
 
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+    const router = useRouter();
+
     const initialState = {
         authLoading: true,
     };
@@ -19,14 +26,18 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
     const loadUser = async () => {
         try {
+            const cookies = parseCookies()
+                 
             const response = await getData(
                 "auth/generateToken",
-                localStorage["token"]
+                cookies["auth"]
             );
+
+            // console.log("res23", response)
 
             //remove token if token wrong!
             if (!response.success) {
-                localStorage.removeItem("token");
+                destroyCookie(null, 'auth')
                 dispatchAuth({
                     type: "SET_AUTH",
                     payload: {
@@ -35,12 +46,14 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                         notifyAuth: "You not loggin !",
                         name: null,
                         username: "",
+                        user_id: ""
                     },
                 });
 
             }
 
             if (response.success) {
+                // router.push("/");
                 dispatchAuth({
                     type: "SET_AUTH",
                     payload: {
@@ -49,13 +62,14 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                         notifyAuth: "",
                         name: response.message.name,
                         username: response.message.username,
+                        user_id: response.message.user_id,
                     },
                 });
             }
 
             //remove token if token wrong!
         } catch (error) {
-            localStorage.removeItem("token");
+            destroyCookie(null, 'auth')
 
             dispatchAuth({
                 type: "SET_AUTH",
@@ -65,6 +79,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                     notifyAuth: "You not loggin !",
                     name: null,
                     username: "",
+                    user_id: ""
                 },
             });
         }
@@ -79,9 +94,16 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     const loginUser = async (FormData: string): Promise<any> => {
         try {
             const res = await postData("auth/login", FormData);
-
             if (res.success) {
-                localStorage.setItem("token", res.token);
+                // localStorage.setItem("token", res.token);
+
+                setCookie(null, 'auth', res.token, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                  })
+
+                  
+
             }
 
             if (!res.success) {
@@ -112,7 +134,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
             // console.log(res)
             if (res.success) {
-                localStorage.setItem("token", res.token);
+                // localStorage.setItem("token", res.token);
             }
             if (!res.success) {
                 dispatchAuth({
@@ -137,7 +159,8 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     };
 
     const logOut = () => {
-        localStorage.removeItem("token");
+        // localStorage.removeItem("token");
+        destroyCookie(null, 'auth')
         dispatchAuth({ type: "SET_AUTH", payload: false });
     };
 

@@ -5,6 +5,8 @@ export const productReducer = (state, action) => {
             return {
                 ...state,
                 cart: payload,
+                productLoading: false,
+
             };
 
         case "Notify":
