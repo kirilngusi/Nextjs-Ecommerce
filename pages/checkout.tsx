@@ -58,7 +58,7 @@ const Checkout = () => {
                 localStorage.removeItem("cart");
                 dispatch({ type: "ADD_TO_CART", payload: [] });
 
-                // router.push("/order/dsf");
+                router.push(`order/${response.order._id}`);
             }
         } catch (error) {
             dispatchAuth({
@@ -69,7 +69,7 @@ const Checkout = () => {
     };
 
     return (
-        <>
+        <div className="container">
             <div className={styles.title_heading}>
                 <h2 className={styles.title_heading_text}>MY CART</h2>
             </div>
@@ -176,7 +176,7 @@ const Checkout = () => {
                                 {cart.map((item, index) => (
                                     <tr key={index}>
                                         <td>
-                                            {item.images}
+                                            <img src={item.images[0]} alt="Image" width="50" height="50"/> x
                                             <span>{item.quantity}</span>
                                         </td>
                                         <td>{item.name}</td>
@@ -194,6 +194,7 @@ const Checkout = () => {
                                 aria-label="Last name"
                                 className="form-control"
                                 placeholder="Discount Code"
+                                disabled
                             />
                         </div>
                         <button type="submit" className="btn btn-primary col-3">
@@ -202,13 +203,13 @@ const Checkout = () => {
                     </div>
 
                     <div className={styles.total_container}>
-                        <div>Transport fee : </div>
+                        <div>Transport fee : FREE</div>
 
                         <div>Total : ${total()} </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

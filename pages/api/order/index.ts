@@ -1,7 +1,7 @@
 import connectDB from "../../../utils/connectDb";
 import OrderProduct from "../../../models/orderModel";
 import OrderDetail from "../../../models/orderItemModel";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import auth from "../../../middleware/auth";
 import {getData} from "../../../utils/request";
 
@@ -12,7 +12,10 @@ import {getData} from "../../../utils/request";
 //             break;
 //     }
 // };
-
+interface orderItemIprop {
+    _id: string;
+    quantity: number;
+}
 
 //@route POST api/order
 //@desc save order to database
@@ -31,7 +34,7 @@ import {getData} from "../../../utils/request";
     } = req.body;
 
     const orderItemIds = Promise.all(
-        req.body.orderItems.map(async (orderItem) => {
+        req.body.orderItems.map(async (orderItem:orderItemIprop) => {
             let newOrderItem = new OrderDetail({
                 product: orderItem._id,
                 quantity: orderItem.quantity,

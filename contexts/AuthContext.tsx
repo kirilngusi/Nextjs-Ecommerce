@@ -4,7 +4,7 @@ import nookies from 'nookies'
 
 import { authReducer } from "../reducers/authReducer";
 
-import { postData, getData } from "../utils/request";
+import { postData, getData , patchData } from "../utils/request";
 
 import {setTokenCookie } from '../middleware/auth-cookies';
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
@@ -89,6 +89,23 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         loadUser();
     }, []);
 
+
+    const changePassWord = async (FormData: string):Promise<any> => {
+        try {
+            const cookies = parseCookies()
+            const res = await patchData("user",FormData, cookies["auth"]);
+            // if(res.success) {
+            //     console.log(res.message);
+            // }
+
+            return res;
+
+            // await loadUser();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
  
 
     const loginUser = async (FormData: string): Promise<any> => {
@@ -101,9 +118,6 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                     maxAge: 30 * 24 * 60 * 60,
                     path: '/',
                   })
-
-                  
-
             }
 
             if (!res.success) {
@@ -135,6 +149,10 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
             // console.log(res)
             if (res.success) {
                 // localStorage.setItem("token", res.token);
+                setCookie(null, 'auth', res.token, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                  })
             }
             if (!res.success) {
                 dispatchAuth({
@@ -171,6 +189,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         logOut,
         dispatchAuth,
         loadUser,
+        changePassWord
     };
 
     return (

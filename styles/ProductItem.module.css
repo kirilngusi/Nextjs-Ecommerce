@@ -1,14 +1,44 @@
 .detail_product {
     margin-top: 50px;
     cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+}
+
+
+
+.detail_product:hover .img_productHide {
+    transform: scale(1.05);
+    opacity: 1;
+
+}
+
+.img_productHide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+
+.img_productHead:hover .img_productHide{
+    opacity: 1;
+
 }
 
 .img_product {
     margin-bottom: 20px;
-    
 }
 
-
 .desc_product {
+    font-size: 15px;
+}
 
+@media only screen and (max-width: 800px) {
+    .desc_product {
+        font-size: 11.5px;
+    }
 }

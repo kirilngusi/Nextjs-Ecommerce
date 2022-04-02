@@ -13,6 +13,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 }
 
+interface decodeIprop {
+    userId: string
+}
+
 
 
 const generateToken = async (req:any,res:NextApiResponse) => {
@@ -32,7 +36,6 @@ const generateToken = async (req:any,res:NextApiResponse) => {
                 .json({ success: false, message: "Invalid Authentication." });
 
         const user = await User.findOne({ _id: decoded.userId });
-
 
         res.status(200).json({
             success: true,

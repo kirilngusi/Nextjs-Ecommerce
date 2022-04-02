@@ -1,10 +1,19 @@
 .img_main {
+    transition: transform .2s;
 
 }
 
+/* .img_main:hover{
+    transform: scale(1.5);
+
+} */
+
 .img_thumb {
     margin-top: 20px;
+    margin-bottom: 10px;
 }      
+
+
 
 .img_thumb_item {
     margin-right: 10px;

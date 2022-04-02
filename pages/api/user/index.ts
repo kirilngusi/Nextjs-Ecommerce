@@ -7,17 +7,19 @@ import connectDB from "../../../utils/connectDb";
 import auth from "../../../middleware/auth";
 
 import * as bcrypt from "bcrypt";
+import { NextApiRequest, NextApiResponse } from 'next'
+
 
 //@route PATCH api/user
 //@desc changed new password
 //@access private
-const changePassword = async (req, res) => {
+const changePassword = async (req:NextApiRequest, res: NextApiResponse) => {
     try {
         connectDB();
+        // const { newPassword } = req.body;
+        const  newPassword  = req.body;
 
         const result = await auth(req, res);
-
-        const { newPassword } = req.body;
         const passwordHash = await bcrypt.hash(newPassword, 12);
 
         if (!newPassword) {
@@ -36,7 +38,7 @@ const changePassword = async (req, res) => {
             { new: true }
         );
 
-        
+        console.log(updatePass)
 
         return res.status(200).json({
             success: true,

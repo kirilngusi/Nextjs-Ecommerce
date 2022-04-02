@@ -5,18 +5,20 @@ import Product from "../../../models/productModel";
 import connectDB from "../../../utils/connectDb";
 import auth from "../../../middleware/auth";
 
+import { NextApiRequest, NextApiResponse } from 'next';
+
 //@route GET api/order
 //@desc watch order with user
 //@access private
 
-const getAllOrderForUser = async (req, res) => {
+const getAllOrderForUser = async (req:NextApiRequest, res: NextApiResponse) => {
     try {
         connectDB();
 
         const result = await auth(req, res);
 
-
-        const product = await OrderProduct.find({
+        //get id user
+        const userId = await OrderProduct.find({
             user: result.message.user_id,
         })
 
@@ -36,7 +38,7 @@ const getAllOrderForUser = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: {
-                product,
+                userId,
             },
         });
     } catch (err) {

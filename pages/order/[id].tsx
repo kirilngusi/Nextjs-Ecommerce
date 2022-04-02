@@ -38,6 +38,7 @@ interface Result {
 }
 
 const CheckOutToOrder = ({ res }: { res: Result }) => {
+    console.log(res)
     if (!res.success) {
         return <h4>Not Order</h4>;
     }
@@ -48,7 +49,7 @@ const CheckOutToOrder = ({ res }: { res: Result }) => {
              <div className={styles.title_heading}>
                 <h2 className={styles.title_heading_text}> Order Detail</h2>
             </div>
-            <div className="col-md-7">
+            <div className="col-md-7 ">
                
                 <h4>Shipping</h4>
                 <div className="">
@@ -73,13 +74,14 @@ const CheckOutToOrder = ({ res }: { res: Result }) => {
                 <div>
                     {res.message.product.orderItems.map(
                         (orderItem: orderItemIprop, index: number) => (
-                            <div key={index} className="d-flex justify-content-between border-bottom mt-2">
-                                <div className="h5">
+                            <div key={index} className="d-flex justify-content-between border-bottom mt-2 justify-content-md-between">
+                                <div className="font-weight-normal">
                                 <img
-                                    src={orderItem.product.images}
+                                    src={orderItem.product.images[0]}
                                     alt="Image Error"
                                     width="50"
                                     height="50"
+                                    className="mr-2"
                                 />
                                 
                                     {orderItem.product.name}
@@ -95,7 +97,7 @@ const CheckOutToOrder = ({ res }: { res: Result }) => {
                         )
                     )}
 
-                    <div className="h5 text-secondary float-right mt-2">Total :${res.message.product.totalPrice}</div>
+                    <div className="h5 text-secondary float-right mt-3 mb-3">Total :${res.message.product.totalPrice}</div>
                 </div>
             </div>
         </div>
@@ -113,7 +115,8 @@ export const getServerSideProps = async ({
 }) => {
     let cookie = req.cookies.auth;
     const res = await getData(`order/${params.id}`, cookie);
-
+    
+    
     return {
         props: { res },
     };
