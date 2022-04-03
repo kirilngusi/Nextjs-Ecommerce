@@ -12,8 +12,8 @@ import styles from "../styles/Checkout.module.css";
 const Checkout = () => {
     const router = useRouter();
     const { state, dispatch } = useContext(ProductContext);
-    const { loadUser, dispatchAuth, authState } = useContext(AuthContext);
-    const { cart, authLoading } = state;
+    const { dispatchAuth, authState } = useContext(AuthContext);
+    const { cart } = state;
 
     const { authUser } = authState;
 
@@ -23,13 +23,14 @@ const Checkout = () => {
 
     const total = (): number => {
         var sum = 0;
-        cart.forEach((item) => {
+        cart.forEach((item: { price: number; quantity: number }) => {
             sum += item.price * item.quantity;
         });
 
         return sum;
     };
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [formOrder, setFormOrder] = useState({
         name: "",
         email: "",
@@ -40,19 +41,18 @@ const Checkout = () => {
         orderItems: cart,
     });
 
-    const onChangeForm = (e) => {
+    const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormOrder({ ...formOrder, [e.target.name]: e.target.value });
     };
 
     const { name, email, mobile, address } = formOrder;
 
-    const submitForm = async (e) => {
+    const submitForm = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         try {
-            let token = authUser.token ;
-            const response = await postData("order", formOrder,token);
-
+            let token = authUser.token;
+            const response = await postData("order", formOrder, token);
 
             if (response.success) {
                 localStorage.removeItem("cart");
@@ -152,7 +152,7 @@ const Checkout = () => {
                 </div>
                 <div className="col-md-6">
                     <div>
-                        <table className="table">
+                        <table className="table text-center ">
                             <thead className="">
                                 <tr className="">
                                     <th scope="col">
@@ -173,17 +173,36 @@ const Checkout = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {cart.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            <img src={item.images[0]} alt="Image" width="50" height="50"/> x
-                                            <span>{item.quantity}</span>
-                                        </td>
-                                        <td>{item.name}</td>
+                                {cart.map(
+                                    (
+                                        item: {
+                                            images: any;
+                                            quantity: number;
+                                            name: string;
+                                            price: number;
+                                        },
+                                        index: number
+                                    ) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <img
+                                                    src={item.images[0]}
+                                                    alt="Image"
+                                                    width="50"
+                                                    height="50"
+                                                />{" "}
+                                                x<span>{item.quantity}</span>
+                                            </td>
+                                            <td className="align-middle">
+                                                {item.name}
+                                            </td>
 
-                                        <td>{item.price}</td>
-                                    </tr>
-                                ))}
+                                            <td className="align-middle">
+                                                {item.price}
+                                            </td>
+                                        </tr>
+                                    )
+                                )}
                             </tbody>
                         </table>
                     </div>

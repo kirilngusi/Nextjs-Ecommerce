@@ -21,20 +21,6 @@ const getAllOrderForUser = async (req:NextApiRequest, res: NextApiResponse) => {
         const userId = await OrderProduct.find({
             user: result.message.user_id,
         })
-
-        // const product = await OrderProduct.find()
-        //     .populate("user", "name")
-        //     .populate({
-        //         path: "orderItems",
-        //         populate: {
-        //             path: "product",
-        //         },
-        //     });
-
-        // const product = await OrderProduct.findOne({
-        //     orderItems: "624440a2ffed2c48bcc757da"
-        // }).populate('OrderDetail')
-
         return res.status(200).json({
             success: true,
             message: {

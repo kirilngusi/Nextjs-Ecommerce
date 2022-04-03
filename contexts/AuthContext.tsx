@@ -1,23 +1,34 @@
-import React, { createContext, useReducer, useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import nookies from 'nookies'
+import React, { createContext, useReducer, useEffect } from "react";
 
+import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { authReducer } from "../reducers/authReducer";
+import { postData, getData, patchData } from "../utils/request";
 
-import { postData, getData , patchData } from "../utils/request";
+interface authUserIprop {
+    auth: boolean,
+    token: string,
+    notifyAuth: string,
+    name: string,
+    username: string,
+    user_id: string,
+}
+interface initialStateIprop {
+    authLoading: boolean
+    authUser: authUserIprop
+}
+interface authContextIprop  {
+    loadUser: () => void,
+    logOut: () => void,
+    loginUser: (FormData: any) => any,
+    regisUser: (FormData: any) => any,
+    changePassword: (FormData: any) => any,
+    authState: initialStateIprop,
+    dispatchAuth: ({}) => void,   
+}
 
-import {setTokenCookie } from '../middleware/auth-cookies';
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
+export const AuthContext = createContext<authContextIprop>();
 
-export const AuthContext = createContext(null);
-
-type AuthContextProviderProps = {
-    children?: JSX.Element;
-};
-
-const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-    const router = useRouter();
-
+const AuthContextProvider:React.FC<React.ReactNode> = ({ children }) => {
     const initialState = {
         authLoading: true,
     };
@@ -26,18 +37,16 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
     const loadUser = async () => {
         try {
-            const cookies = parseCookies()
-                 
+            const cookies = parseCookies();
+
             const response = await getData(
                 "auth/generateToken",
                 cookies["auth"]
             );
 
-            // console.log("res23", response)
-
             //remove token if token wrong!
             if (!response.success) {
-                destroyCookie(null, 'auth')
+                destroyCookie(null, "auth");
                 dispatchAuth({
                     type: "SET_AUTH",
                     payload: {
@@ -46,14 +55,12 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                         notifyAuth: "You not loggin !",
                         name: null,
                         username: "",
-                        user_id: ""
+                        user_id: "",
                     },
                 });
-
             }
 
             if (response.success) {
-                // router.push("/");
                 dispatchAuth({
                     type: "SET_AUTH",
                     payload: {
@@ -67,9 +74,9 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                 });
             }
 
-            //remove token if token wrong!
+        //remove token if token wrong!
         } catch (error) {
-            destroyCookie(null, 'auth')
+            destroyCookie(null, "auth");
 
             dispatchAuth({
                 type: "SET_AUTH",
@@ -79,7 +86,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                     notifyAuth: "You not loggin !",
                     name: null,
                     username: "",
-                    user_id: ""
+                    user_id: "",
                 },
             });
         }
@@ -89,35 +96,28 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         loadUser();
     }, []);
 
-
-    const changePassWord = async (FormData: string):Promise<any> => {
+    const changePassWord = async (FormData: string): Promise<any> => {
         try {
-            const cookies = parseCookies()
-            const res = await patchData("user",FormData, cookies["auth"]);
-            // if(res.success) {
-            //     console.log(res.message);
-            // }
+            const cookies = parseCookies();
+                                
+            const res = await patchData("user", FormData, cookies["auth"]);
 
             return res;
 
             // await loadUser();
-
         } catch (error) {
             console.log(error);
         }
-    }
- 
+    };
 
     const loginUser = async (FormData: string): Promise<any> => {
         try {
             const res = await postData("auth/login", FormData);
             if (res.success) {
-                // localStorage.setItem("token", res.token);
-
-                setCookie(null, 'auth', res.token, {
+                setCookie(null, "auth", res.token, {
                     maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                  })
+                    path: "/",
+                });
             }
 
             if (!res.success) {
@@ -146,13 +146,11 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         try {
             const res = await postData("auth/register", FormData);
 
-            // console.log(res)
             if (res.success) {
-                // localStorage.setItem("token", res.token);
-                setCookie(null, 'auth', res.token, {
+                setCookie(null, "auth", res.token, {
                     maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                  })
+                    path: "/",
+                });
             }
             if (!res.success) {
                 dispatchAuth({
@@ -177,19 +175,18 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     };
 
     const logOut = () => {
-        // localStorage.removeItem("token");
-        destroyCookie(null, 'auth')
+        destroyCookie(null, "auth");
         dispatchAuth({ type: "SET_AUTH", payload: false });
     };
 
-    const listData: any = {
+    const listData:any = {
         authState,
         loginUser,
         regisUser,
         logOut,
         dispatchAuth,
         loadUser,
-        changePassWord
+        changePassWord,
     };
 
     return (
@@ -198,3 +195,5 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 };
 
 export default AuthContextProvider;
+
+

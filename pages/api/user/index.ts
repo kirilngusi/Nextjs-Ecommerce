@@ -16,7 +16,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 const changePassword = async (req:NextApiRequest, res: NextApiResponse) => {
     try {
         connectDB();
-        // const { newPassword } = req.body;
         const  newPassword  = req.body;
 
         const result = await auth(req, res);
@@ -38,7 +37,6 @@ const changePassword = async (req:NextApiRequest, res: NextApiResponse) => {
             { new: true }
         );
 
-        console.log(updatePass)
 
         return res.status(200).json({
             success: true,

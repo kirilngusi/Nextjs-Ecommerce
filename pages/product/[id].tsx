@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState  } from "react";
 import { getData } from "../../utils/request";
 import Image from "next/image";
 import { productProps } from "../../utils/types";
@@ -17,7 +17,7 @@ const ProductDetail = ({ res }: { res: productDetailProps }) => {
 
     const [imgmain, setImgMain] = useState(res.product.images[0]);
 
-    const changeImg = (e) => {
+    const changeImg = (e:any) => {
         setImgMain(e.target.name);
     };
 
@@ -33,7 +33,8 @@ const ProductDetail = ({ res }: { res: productDetailProps }) => {
                         />
                     </div>
                     <div className={styles.img_thumb}>
-                        {res.product.images.map((image, index) => (
+                        {res.product.images.map((image: any, index: number) => (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 key={index}
                                 className={styles.img_thumb_item}

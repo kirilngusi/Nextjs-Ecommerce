@@ -1,34 +1,27 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import connectDB from "../../../utils/connectDb";
-import jwt from 'jsonwebtoken'
+import type { NextApiRequest, NextApiResponse } from "next";
+import jwt from "jsonwebtoken";
 import User from "../../../models/userModel";
 
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    switch(req.method){
+    switch (req.method) {
         case "GET":
             await generateToken(req, res);
             break;
     }
-
-}
+};
 
 interface decodeIprop {
-    userId: string
+    userId?: string;
 }
 
-
-
-const generateToken = async (req:any,res:NextApiResponse) => {
+const generateToken = async (req: any, res: NextApiResponse) => {
     try {
-
         const authHeader = req.headers.authorization;
         const token = authHeader.split(" ")[1];
 
-
         const key_secret = process.env.ACCESS_TOKEN_JWT as string;
 
-        const decoded = jwt.verify(token, key_secret);
+        const decoded:any = jwt.verify(token, key_secret);
 
         if (!decoded)
             return res
@@ -45,11 +38,8 @@ const generateToken = async (req:any,res:NextApiResponse) => {
                 token: token,
                 user_id: user._id,
             },
-            
         });
-
     } catch (error) {
         return res.status(403).json({ success: false, message: error });
-        
     }
-}
+};

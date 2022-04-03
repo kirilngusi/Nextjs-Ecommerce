@@ -14,7 +14,7 @@ const Navbar = () => {
         logOut,
     } = useContext(AuthContext);
 
-    const { productLoading, cart } = state;
+    const {  cart } = state;
 
     if (authLoading) {
         return <Loading />;

@@ -64,7 +64,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
             token: accessToken,
             name: newUser.name,
             username: newUser.username,
-            user_id: user._id
+            user_id: newUser._id
         });
 
     } catch (err) {

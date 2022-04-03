@@ -34,18 +34,6 @@ const getOrderDetail = async (req: NextApiRequest, res: NextApiResponse) => {
                 },
             });
 
- 
-
-        // const product = await OrderProduct.find({})
-        //     .populate("user", "name")
-        //     .populate({
-        //         path: "orderItems",
-        //         populate: {
-        //             path: "product",
-        //             select: ["images" , "price" , "name"]
-        //         },
-
-        //     });
         if (!product) {
             return res.status(400).json({
                 success: false,

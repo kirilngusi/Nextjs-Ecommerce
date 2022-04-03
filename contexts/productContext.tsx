@@ -1,14 +1,27 @@
-import React, { createContext, useReducer, useState, useEffect } from "react";
-
-import { postData } from "../utils/request";
+import React, { createContext, useReducer, useEffect } from "react";
 
 import { productReducer } from "../reducers/productReducer";
+interface initialStateIprop {
+    notify: {};
+    cart: [];
+    productLoading: boolean;
 
-export const ProductContext = createContext(null);
+}
+
+interface ProductContextIprop {
+    state: initialStateIprop;
+    dispatch: ({}) => any;
+    addToCart: (product:any, cart:[]) => any;
+    ascendingProduct: (data: {}, id: string) => any;
+    descendingProduct: (data: {}, id: string) => any;
+    CancelProduct: (data: {}, id: string) => any;
+}
 
 type AuthContextProviderProps = {
     children?: JSX.Element;
 };
+
+export const ProductContext = createContext<ProductContextIprop>();
 
 const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
     const initialState = {
@@ -21,26 +34,22 @@ const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
 
     const { cart } = state;
 
-    // console.log(cart);
-
-   
     useEffect(() => {
-        const cart = JSON.parse(localStorage.getItem("cart") as string)
+        const cart = JSON.parse(localStorage.getItem("cart") as string);
 
-        if(cart) dispatch({ type: 'ADD_TO_CART', payload: cart })
-
-    }, [])
+        if (cart) dispatch({ type: "ADD_TO_CART", payload: cart });
+    }, []);
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart))
-    }, [cart])
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
 
-    const addToCart = (product, cart) => {
+    const addToCart = (product: { inStock: number; _id: string; }, cart: []) => {
         if (product.inStock === 0) {
             return { type: "Notify", payload: { error: "product is soldout" } };
         }
 
-        const check = cart.every((item) => {
+        const check = cart.every((item: { _id: string; }) => {
             return item._id !== product._id;
         });
 
@@ -51,8 +60,7 @@ const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
             };
         }
 
-
-        localStorage.setItem("cart", JSON.stringify(cart))
+        localStorage.setItem("cart", JSON.stringify(cart));
 
         return {
             type: "ADD_TO_CART",
@@ -60,7 +68,7 @@ const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
         };
     };
 
-    const ascendingProduct = (data, id) => {
+    const ascendingProduct = (data: any, id: string) => {
         const newData = [...data];
         newData.forEach((item) => {
             if (item._id === id) {
@@ -71,7 +79,7 @@ const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
         return { type: "ADD_TO_CART", payload: newData };
     };
 
-    const descendingProduct = (data, id) => {
+    const descendingProduct = (data: any, id: string) => {
         const newData = [...data];
         newData.forEach((item) => {
             if (item._id === id) {
@@ -85,13 +93,13 @@ const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
         return { type: "ADD_TO_CART", payload: newData };
     };
 
-    const CancelProduct = (data, id) => {
-        const newData = data.filter((item) => item._id !== id);
+    const CancelProduct = (data: any[], id: string) => {
+        const newData = data.filter((item: { _id: any; }) => item._id !== id);
 
         return { type: "DELETE_ITEM", payload: newData };
     };
 
-    const TodoContextData = {
+    const TodoContextData: any = {
         state,
         dispatch,
         addToCart,

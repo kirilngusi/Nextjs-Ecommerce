@@ -3,6 +3,14 @@ import styles from "../styles/Cart.module.css";
 import { ProductContext } from "../contexts/productContext";
 import Link from "next/link";
 
+interface itemsProp {
+    name: string,
+    images: [],
+    quantity: number,
+    price: number,
+    _id:string
+}
+
 const ProductCart = () => {
     const {
         state,
@@ -12,7 +20,23 @@ const ProductCart = () => {
         CancelProduct,
     } = useContext(ProductContext);
 
-    const { cart, authLoading } = state;
+    const { cart, productLoading } = state;
+
+    const total = (): number => {
+        var sum = 0;
+        cart.forEach((item: { price: number; quantity: number }) => {
+            sum += item.price * item.quantity;
+        });
+
+        return sum;
+    };
+    const initTotal = total;
+
+    const [subtotal, setSubTotal] = useState(initTotal);
+
+    useEffect(() => {
+        setSubTotal(initTotal);
+    }, [cart]);
 
     if (cart.length == 0) {
         return (
@@ -25,25 +49,9 @@ const ProductCart = () => {
         );
     }
 
-    if (authLoading) {
+    if (productLoading) {
         return <h1>Loading</h1>;
     }
-
-    const total = (): number => {
-        var sum = 0;
-        cart.forEach((item) => {
-            sum += item.price * item.quantity;
-        });
-
-        return sum;
-    };
-    const initTotal = total;
-
-    const [subtotal, setSubTotal] = useState<number>(initTotal);
-
-    useEffect(() => {
-        setSubTotal(initTotal);
-    }, [cart]);
 
     return (
         <div className="container">
@@ -65,7 +73,7 @@ const ProductCart = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cart.map((item, index) => (
+                        {cart.map((item:itemsProp, index:number) => (
                             <tr key={index} className="">
                                 <th className="align-middle" scope="row">
                                     <img
@@ -75,7 +83,7 @@ const ProductCart = () => {
                                         width="70px"
                                         height="70px"
                                         layout="responsive"
-                                        objectFit="contain"
+                                        objectfit="contain"
                                     />
                                 </th>
                                 <td className="align-middle">{item.name}</td>

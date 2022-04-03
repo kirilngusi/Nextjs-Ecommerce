@@ -27,10 +27,10 @@ const Register = () => {
         e.preventDefault();
         try {
             const res = await regisUser(registerForm);
-          
             if(res.success) {
                 router.push("/")
             }
+            return res;
         } catch (e) {
             console.log(e);
         }

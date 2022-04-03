@@ -75,7 +75,7 @@ const Login = () => {
                                             />
                                         </div>
                                         <div className="form-group ">
-                                            Don't Have account ?{" "}
+                                            Don&#39;t Have account ?
                                             <Link href="/register">
                                                 <span className="text-info">
                                                     Register

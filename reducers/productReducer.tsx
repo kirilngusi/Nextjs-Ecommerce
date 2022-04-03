@@ -1,26 +1,45 @@
-export const productReducer = (state, action) => {
-    const { type, payload} = action;
+import * as React from "react";
+
+enum ActionType {
+    ADD_TO_CART = "ADD_TO_CART",
+    Notify = "Notify",
+    DELETE_ITEM = "DELETE_ITEM",
+}
+
+interface actionIprop {
+    type: string;
+    payload: {} | unknown;
+}
+
+interface initialStateIprop {
+    productLoading: boolean;
+}
+
+export const productReducer: React.Reducer<initialStateIprop, actionIprop> = (
+    state,
+    action
+) => {
+    const { type, payload } = action;
     switch (type) {
-        case "ADD_TO_CART":
+        case ActionType.ADD_TO_CART:
             return {
                 ...state,
                 cart: payload,
                 productLoading: false,
-
             };
 
-        case "Notify":
+        case ActionType.Notify:
             return {
                 ...state,
                 notify: payload,
             };
-        
-        case "DELETE_ITEM":
+
+        case ActionType.DELETE_ITEM:
             return {
                 ...state,
                 cart: payload,
             };
-            
+
         default:
             return state;
     }

@@ -38,7 +38,6 @@ interface Result {
 }
 
 const CheckOutToOrder = ({ res }: { res: Result }) => {
-    console.log(res)
     if (!res.success) {
         return <h4>Not Order</h4>;
     }

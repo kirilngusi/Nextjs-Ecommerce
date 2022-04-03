@@ -1,4 +1,11 @@
-const Toast = ({msg, handleClose , bgColor}) => {
+interface msgIprop {
+    title: string,
+    msg: string
+}
+
+
+
+const Toast = ({msg, handleClose , bgColor} : {msg:msgIprop , handleClose: any ,bgColor: string}) => {
     // console.log("msg", msg)
     return (
         <div

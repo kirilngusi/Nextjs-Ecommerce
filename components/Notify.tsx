@@ -8,7 +8,6 @@ import {AuthContext } from '../contexts/AuthContext';
     const {state , dispatch} = useContext(ProductContext);
     const {authState , dispatchAuth} = useContext(AuthContext);
 
-    // console.log("authState", authState);
 
     const {notify} = state;
 
@@ -30,7 +29,6 @@ import {AuthContext } from '../contexts/AuthContext';
             {notify.loading && <Loading />}
             {notify.error && <Toast bgColor={"bg-danger"} msg={{msg: notify.error , title: 'Error'}} handleClose={() => dispatch({type: "Notify", payload: {}}) }/>}
             {authState.notifyAuth && <Toast bgColor={"bg-danger"} msg={{msg: authState.notifyAuth , title: 'Error'}} handleClose={() => dispatchAuth({type: "Notify", payload: null}) }/>  }
-
         </div>
   )
 }
