@@ -20,19 +20,6 @@ interface IProps {
 
 const Home = (props: IProps) => {
     const [products, setProducts] = useState(props.productProps);
-    const {state , dispatch} = useContext(ProductContext)
-
-    const {cart} = state
-
-    useEffect(() => {
-        const cart = JSON.parse(localStorage.getItem("cart") as string);
-
-        if (cart) dispatch({ type: "ADD_TO_CART", payload: cart });
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart]);
 
     return (
         <>
