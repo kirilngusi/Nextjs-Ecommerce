@@ -1,5 +1,7 @@
 
-const url_Base = 'http://localhost:3000';
+// const url_Base = 'http://localhost:3000';
+const url_Base = process.env.NODE_ENV === 'production' ? "https://nextjs-ecommerce.vercel.app/" : "http://localhost:3000";
+
 
 // const token =  localStorage.getItem('token')
 
