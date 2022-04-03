@@ -20,4 +20,4 @@ Demo: https://nextjs-ecommerce.vercel.app/
 
 ## Preview
 
-![Preview 1](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981734/1a_uiu6u9.png) ![Preview 2](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981807/1a1_cngayo.png) ![Preview 3](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981827/1a2_lhehll.png) ![Preview 4](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981850/1a3_fmvbiq.png)
+![Preview 1](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981734/1a_uiu6u9.png) ![Preview 2](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981807/1a1_cngayo.png) ![Preview 3](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981827/1a2_lhehll.png) ![Preview 4](https://res.cloudinary.com/dmqek41c2/image/upload/v1648981967/1a3_mdxr7y.png)
