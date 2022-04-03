@@ -5,11 +5,11 @@ import React, { useState, useContext } from "react";
 
 import { getData } from "../utils/request";
 import { AuthContext } from "../contexts/AuthContext";
-const profile = ({ res }) => {
-    const router = useRouter();
-    const [newpassword, setNewPassword] = useState("");
 
+const Profile = ({ res }) => {
+    const router = useRouter();
     const { changePassWord } = useContext(AuthContext);
+    const [newpassword, setNewPassword] = useState("");
 
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewPassword(e.target.value);
@@ -122,7 +122,7 @@ const profile = ({ res }) => {
     );
 };
 
-export default profile;
+export default Profile;
 
 export const getServerSideProps: GetServerSideProps = async ({
     req,

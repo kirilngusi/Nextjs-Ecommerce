@@ -44,7 +44,7 @@ const auth = async (req: any, res: any) => {
 
         const key_secret = process.env.ACCESS_TOKEN_JWT as string;
 
-        const decoded = jwt.verify(token, key_secret);
+        const decoded:any = jwt.verify(token, key_secret);
 
         if (!decoded)
             return res

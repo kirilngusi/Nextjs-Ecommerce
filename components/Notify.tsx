@@ -1,36 +1,50 @@
-import React , {useContext} from 'react'
-import Toast from './Toast';
-import Loading from './Loading';
-import { ProductContext } from '../contexts/productContext';
-import {AuthContext } from '../contexts/AuthContext';
- const Notify = () => {
+import React, { useContext } from "react";
+import Toast from "./Toast";
+import Loading from "./Loading";
+import { ProductContext } from "../contexts/productContext";
+import { AuthContext } from "../contexts/AuthContext";
+const Notify = () => {
+    const { state, dispatch } = useContext(ProductContext);
+    const { dispatchAuth } = useContext(AuthContext);
+    const { authState }: { authState: any } = useContext(AuthContext);
 
-    const {state , dispatch} = useContext(ProductContext);
-    const {authState , dispatchAuth} = useContext(AuthContext);
+    const { notify }: { notify: any } = state;
 
-
-    const {notify} = state;
-
-
-    if(notify.error) {
+    if (notify.error) {
         setTimeout(() => {
-            dispatch({type: "Notify", payload: {}})
-        },3000)
+            dispatch({ type: "Notify", payload: {} });
+        }, 3000);
     }
 
-    if(authState.notifyAuth) {
+    if (authState.notifyAuth) {
         setTimeout(() => {
-            dispatchAuth({type: "Notify", payload: null});
-        },3000)
+            dispatchAuth({ type: "Notify", payload: null });
+        }, 3000);
     }
 
     return (
         <div>
             {notify.loading && <Loading />}
-            {notify.error && <Toast bgColor={"bg-danger"} msg={{msg: notify.error , title: 'Error'}} handleClose={() => dispatch({type: "Notify", payload: {}}) }/>}
-            {authState.notifyAuth && <Toast bgColor={"bg-danger"} msg={{msg: authState.notifyAuth , title: 'Error'}} handleClose={() => dispatchAuth({type: "Notify", payload: null}) }/>  }
+            {notify.error && (
+                <Toast
+                    bgColor={"bg-danger"}
+                    msg={{ msg: notify.error, title: "Error" }}
+                    handleClose={() =>
+                        dispatch({ type: "Notify", payload: {} })
+                    }
+                />
+            )}
+            {authState.notifyAuth && (
+                <Toast
+                    bgColor={"bg-danger"}
+                    msg={{ msg: authState.notifyAuth, title: "Error" }}
+                    handleClose={() =>
+                        dispatchAuth({ type: "Notify", payload: null })
+                    }
+                />
+            )}
         </div>
-  )
-}
+    );
+};
 
 export default Notify;

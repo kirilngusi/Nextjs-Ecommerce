@@ -22,8 +22,6 @@ const ProductItem = ({ product }: { product: productProps }) => {
                                 alt="Card image cap"
                                 width=""
                                 height=""
-                                layout="responsive"
-                                objectfit="contain"
                             />
                         </div>
                         <div className={styles.img_productHide}>
@@ -33,8 +31,6 @@ const ProductItem = ({ product }: { product: productProps }) => {
                                 alt="Card image cap"
                                 width=""
                                 height=""
-                                layout="responsive"
-                                objectfit="contain"
                             />
                         </div>
                     </div>

@@ -18,12 +18,12 @@ const ProductDetail = ({ res }: { res: productDetailProps }) => {
     const [imgmain, setImgMain] = useState(res.product.images[0]);
 
     const changeImg = (e:any) => {
-        setImgMain(e.target.name);
+        setImgMain(e.target.src);
     };
 
     return (
         <div className="container">
-            <div className="row mt-4 h-100">
+            <div className="row mt-4 ">
                 <div className="col-md-6 mt-3">
                     <div className={styles.img_main}>
                         <img
@@ -42,13 +42,13 @@ const ProductDetail = ({ res }: { res: productDetailProps }) => {
                                 alt="Card image cap"
                                 width="100px"
                                 height="90px"
-                                name={image}
+                                // value={image}
                                 onClick={changeImg}
                             />
                         ))}
                     </div>
                 </div>
-                <div className="col-md-6 mt-4">
+                <div className="col-md-6 mt-4 ">
                     <h3 className="text-center">{res.product.name}</h3>
                     <div className="text-center">
                         <h5>Price: {`$${res.product.price}`}</h5>

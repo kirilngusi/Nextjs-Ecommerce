@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext, useState, useEffect } from "react";
 import styles from "../styles/Cart.module.css";
 import { ProductContext } from "../contexts/productContext";
@@ -5,7 +6,7 @@ import Link from "next/link";
 
 interface itemsProp {
     name: string,
-    images: [],
+    images: any,
     quantity: number,
     price: number,
     _id:string
@@ -82,8 +83,7 @@ const ProductCart = () => {
                                         alt="Card image cap"
                                         width="70px"
                                         height="70px"
-                                        layout="responsive"
-                                        objectfit="contain"
+                                      
                                     />
                                 </th>
                                 <td className="align-middle">{item.name}</td>

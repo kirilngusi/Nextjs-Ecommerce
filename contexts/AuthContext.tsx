@@ -16,17 +16,18 @@ interface initialStateIprop {
     authLoading: boolean
     authUser: authUserIprop
 }
-interface authContextIprop  {
+interface authContextIprop {
     loadUser: () => void,
     logOut: () => void,
     loginUser: (FormData: any) => any,
     regisUser: (FormData: any) => any,
-    changePassword: (FormData: any) => any,
+    changePassWord: (FormData: any) => any,
     authState: initialStateIprop,
     dispatchAuth: ({}) => void,   
+
 }
 
-export const AuthContext = createContext<authContextIprop>();
+export const AuthContext = createContext<authContextIprop>(null);
 
 const AuthContextProvider:React.FC<React.ReactNode> = ({ children }) => {
     const initialState = {

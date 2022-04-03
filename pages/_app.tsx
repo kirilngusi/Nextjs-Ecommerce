@@ -6,7 +6,9 @@ import ProductContextProvider from "../contexts/productContext";
 import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
+    
     return (
+        /* tslint:disable */
         <ProductContextProvider>
             <AuthContextProvider>
                 <Layout>

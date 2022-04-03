@@ -2,26 +2,27 @@ import React, { createContext, useReducer, useEffect } from "react";
 
 import { productReducer } from "../reducers/productReducer";
 interface initialStateIprop {
-    notify: {};
-    cart: [];
-    productLoading: boolean;
+    cart: [],
+    notify: {},
+    productLoading: boolean
 
 }
 
 interface ProductContextIprop {
-    state: initialStateIprop;
-    dispatch: ({}) => any;
     addToCart: (product:any, cart:[]) => any;
     ascendingProduct: (data: {}, id: string) => any;
     descendingProduct: (data: {}, id: string) => any;
     CancelProduct: (data: {}, id: string) => any;
+    state: initialStateIprop;
+    dispatch: ({}) => any;
+
 }
 
 type AuthContextProviderProps = {
     children?: JSX.Element;
 };
 
-export const ProductContext = createContext<ProductContextIprop>();
+export const ProductContext = createContext<ProductContextIprop>(null);
 
 const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
     const initialState = {
@@ -31,18 +32,6 @@ const ProductContextProvider = ({ children }: AuthContextProviderProps) => {
     };
 
     const [state, dispatch] = useReducer(productReducer, initialState);
-
-    const { cart } = state;
-
-    useEffect(() => {
-        const cart = JSON.parse(localStorage.getItem("cart") as string);
-
-        if (cart) dispatch({ type: "ADD_TO_CART", payload: cart });
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart]);
 
     const addToCart = (product: { inStock: number; _id: string; }, cart: []) => {
         if (product.inStock === 0) {
