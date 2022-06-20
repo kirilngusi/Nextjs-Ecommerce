@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect} from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -11,13 +11,22 @@ const Login = () => {
         password: "",
     });
 
-    const { loginUser } = useContext(AuthContext);
+    const { loginUser , authState: {authUser} } = useContext(AuthContext);
+
 
     const onChangeLoginForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
     };
 
     const { username, password } = loginForm;
+
+    const {auth } = authUser;
+
+    useEffect(() => {
+        if(auth) {
+            router.push("/")
+        }
+    },[])
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
         e: React.FormEvent<HTMLFormElement>

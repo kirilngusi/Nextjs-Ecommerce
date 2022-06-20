@@ -23,6 +23,7 @@ const generateToken = async (req: any, res: NextApiResponse) => {
 
         const decoded:any = jwt.verify(token, key_secret);
 
+
         if (!decoded)
             return res
                 .status(400)
@@ -37,6 +38,7 @@ const generateToken = async (req: any, res: NextApiResponse) => {
                 name: user.name,
                 token: token,
                 user_id: user._id,
+                admin: decoded.admin
             },
         });
     } catch (error) {

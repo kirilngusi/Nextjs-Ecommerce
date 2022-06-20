@@ -3,17 +3,20 @@ import type { AppProps } from "next/app";
 
 import AuthContextProvider from "../contexts/AuthContext";
 import ProductContextProvider from "../contexts/productContext";
-import Layout from "../components/Layout";
+import AdminContextProvider from "../contexts/AdminContext";
 
+import Layout from "../components/Layout";
+// import DashBoard from "../pages/admin/login";
 function MyApp({ Component, pageProps }: AppProps) {
-    
     return (
         /* tslint:disable */
         <ProductContextProvider>
             <AuthContextProvider>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <AdminContextProvider>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </AdminContextProvider>
             </AuthContextProvider>
         </ProductContextProvider>
     );

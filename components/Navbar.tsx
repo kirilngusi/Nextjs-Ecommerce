@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 import { ProductContext } from "../contexts/productContext";
 import { AuthContext } from "../contexts/AuthContext";
@@ -7,12 +8,19 @@ import { AuthContext } from "../contexts/AuthContext";
 import Loading from "./Loading";
 
 const Navbar = () => {
+    const router = useRouter();
     const { state } = useContext(ProductContext);
 
     const {
         authState: { authUser, authLoading },
         logOut,
     } = useContext(AuthContext);
+
+    const handleLogOut = (e) => {
+        logOut();
+        e.preventDefault();
+        router.push("/");
+    }
 
     const {  cart } = state;
 
@@ -56,7 +64,7 @@ const Navbar = () => {
                         {authUser.name ? (
                             <>
                                 <li className="nav-item ">
-                                    <Link href="/profile">
+                                    <Link href="/order">
                                         <a className="nav-link">
                                             <i className="fas fa-user">
                                                 {authUser.name}
@@ -65,8 +73,8 @@ const Navbar = () => {
                                     </Link>
                                 </li>
 
-                                <li className="nav-item" onClick={logOut}>
-                                    <a className="nav-link">
+                                <li className="nav-item" onClick={handleLogOut}>
+                                    <a className="nav-link " style={{cursor: "pointer"}}>
                                         <i className="fas fa-sign-out-alt">
                                             Logout
                                         </i>

@@ -8,7 +8,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const getProducts = async (req:NextApiRequest, res:NextApiResponse) => {
     try {
         connectDB();
-        const products = await Product.find();
+        const limitData:any = req.query.limit ;
+        const products = await Product.find().limit(parseInt(limitData));
+        
         res.json({
             success: true,
             result: products.length,

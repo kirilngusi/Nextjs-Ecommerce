@@ -25,6 +25,7 @@ interface authContextIprop {
     changePassWord: (FormData: any) => any,
     authState: initialStateIprop,
     dispatchAuth: ({}) => void,   
+    loginAdmin: (FormData: any) => any
 
 }
 
@@ -195,6 +196,40 @@ const AuthContextProvider:React.FC<React.ReactNode> = ({ children }) => {
         dispatchAuth({ type: "SET_AUTH", payload: false });
     };
 
+    const loginAdmin = async (FormData: string): Promise<any> => {
+        try {
+            const res = await postData("admin", FormData);
+
+            if (res.success) {
+                setCookie(null, "auth", res.token, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: "/",
+                });
+            }
+
+            if (!res.success) {
+                dispatchAuth({
+                    type: "SET_AUTH",
+                    payload: { auth: false, token: "", notifyAuth: res.msg },
+                });
+                dispatchAuth({
+                    type: "Notify",
+                    payload: res.msg,
+                });
+            }
+
+            await loadUser();
+
+            return res;
+        } catch (error) {
+            // dispatchAuth({
+            //     type: "Notify",
+            //     payload: error,
+            // });
+            console.log(error)
+        }
+    }
+
     const listData:any = {
         authState,
         loginUser,
@@ -203,6 +238,7 @@ const AuthContextProvider:React.FC<React.ReactNode> = ({ children }) => {
         dispatchAuth,
         loadUser,
         changePassWord,
+        loginAdmin
     };
 
     return (

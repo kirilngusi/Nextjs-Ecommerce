@@ -68,6 +68,8 @@ const Checkout = () => {
         }
     };
 
+
+
     return (
         <div className="container">
             <div className={styles.title_heading}>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext , useEffect} from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -13,13 +13,21 @@ const Register = () => {
         password: "",
     });
 
-    const { regisUser } = useContext(AuthContext);
+    const { regisUser,  authState: {authUser} } = useContext(AuthContext);
 
     const onChangeRegisForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
     };
 
     const {name, username, password  } = registerForm;
+
+    const {auth} = authUser;
+
+    useEffect(() => {
+        if(auth) {
+            router.push("/")
+        }
+    },[])
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
         e: React.FormEvent<HTMLFormElement>

@@ -8,7 +8,7 @@ import auth from "../../../middleware/auth";
 import { NextApiRequest, NextApiResponse } from 'next';
 
 //@route GET api/order
-//@desc watch order with user
+//@desc watch order 
 //@access private
 
 const getAllOrderForUser = async (req:NextApiRequest, res: NextApiResponse) => {
@@ -17,10 +17,18 @@ const getAllOrderForUser = async (req:NextApiRequest, res: NextApiResponse) => {
 
         const result = await auth(req, res);
 
-        //get id user
-        const userId = await OrderProduct.find({
-            user: result.message.user_id,
-        })
+        var userId = '';
+        if(result.message.username === 'admin') {
+            userId = await OrderProduct.find({})
+        }
+        else {
+            //get id user
+            userId = await OrderProduct.find({
+                user: result.message.user_id,
+            })
+        }
+
+
         return res.status(200).json({
             success: true,
             message: {
@@ -33,3 +41,5 @@ const getAllOrderForUser = async (req:NextApiRequest, res: NextApiResponse) => {
 };
 
 export default getAllOrderForUser;
+
+
