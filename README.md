@@ -14,8 +14,6 @@ Demo: https://nextjs-ecommerce.vercel.app/
 
 
 ## Unfinished Features
-- Admin Dashboard
-- Cookie with mobile
 - .....
 
 ## Preview
