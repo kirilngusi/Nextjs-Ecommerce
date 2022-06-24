@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/link-passhref */
 import React from "react";
 import Link from "next/link";
+import Image from 'next/image'
 
 import { productProps } from "../utils/types";
 
@@ -16,21 +17,21 @@ const ProductItem = ({ product }: { product: productProps }) => {
                 >
                     <div className={styles.img_product}>
                         <div className={styles.img_productHead}>
-                            <img
+                            <Image
                                 className="card-img-top"
                                 src={product.images[0]}
                                 alt="Card image cap"
-                                width=""
-                                height=""
+                                width="428"
+                                height="428"
                             />
                         </div>
                         <div className={styles.img_productHide}>
-                            <img
+                            <Image
                                 className="card-img-top"
                                 src={product.images[1]}
                                 alt="Card image cap"
-                                width=""
-                                height=""
+                                width="428"
+                                height="428"
                             />
                         </div>
                     </div>

@@ -26,10 +26,11 @@ const ProductDetail = ({ res }: { res: productDetailProps }) => {
             <div className="row mt-4 ">
                 <div className="col-md-6 mt-3">
                     <div className={styles.img_main}>
-                        <img
+                        <Image
                             src={imgmain}
                             alt="Card image cap"
-                            width="100%"
+                            width="450"
+                            height="450"
                         />
                     </div>
                     <div className={styles.img_thumb}>
@@ -40,8 +41,8 @@ const ProductDetail = ({ res }: { res: productDetailProps }) => {
                                 className={styles.img_thumb_item}
                                 src={image}
                                 alt="Card image cap"
-                                width="100px"
-                                height="90px"
+                                width="100"
+                                height="90"
                                 // value={image}
                                 onClick={changeImg}
                             />

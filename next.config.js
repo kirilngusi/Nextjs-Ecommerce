@@ -8,7 +8,7 @@ require("dotenv").config();
 
 module.exports = {
     images: {
-        domains: ["mdbcdn.b-cdn.net"],
+        domains: ["anh365.com", "sv3.anh365.com", "img.upanh.tv"],
     },
 
     env: {
