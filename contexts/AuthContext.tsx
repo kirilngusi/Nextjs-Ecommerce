@@ -135,6 +135,10 @@ const AuthContextProvider:React.FC<React.ReactNode> = ({ children }) => {
                     maxAge: 30 * 24 * 60 * 60,
                     path: "/",
                 });
+                dispatchAuth({
+                    type: "Notify",
+                    payload: "Login success !!"
+                });
             }
 
             if (!res.success) {
@@ -167,6 +171,10 @@ const AuthContextProvider:React.FC<React.ReactNode> = ({ children }) => {
                 setCookie(null, "auth", res.token, {
                     maxAge: 30 * 24 * 60 * 60,
                     path: "/",
+                });
+                dispatchAuth({
+                    type: "Notify",
+                    payload: "Register success !!"
                 });
             }
             if (!res.success) {
